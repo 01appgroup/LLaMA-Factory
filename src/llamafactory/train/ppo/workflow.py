@@ -16,7 +16,7 @@
 # limitations under the License.
 
 from typing import TYPE_CHECKING, List, Optional
-
+import os
 from transformers import DataCollatorWithPadding
 
 from ...data import get_dataset
@@ -71,7 +71,8 @@ def run_ppo(
     # Training
     if training_args.do_train:
         ppo_trainer.ppo_train(resume_from_checkpoint=training_args.resume_from_checkpoint)
-        ppo_trainer.save_model()
+        ppo_trainer.save_model(os.path.join(
+            ppo_trainer.args.output_dir, "model"))
         if training_args.should_save:
             fix_valuehead_checkpoint(model, training_args.output_dir, training_args.save_safetensors)
 

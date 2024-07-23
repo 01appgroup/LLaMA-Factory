@@ -16,6 +16,7 @@ import logging
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor
+from transformers.utils.logging import get_logger as _get_logger
 
 from .constants import RUNNING_LOG
 
@@ -57,20 +58,22 @@ class LoggerHandler(logging.Handler):
 
 
 def get_logger(name: str) -> logging.Logger:
-    r"""
-    Gets a standard logger with a stream hander to stdout.
-    """
-    formatter = logging.Formatter(
-        fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"
-    )
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(formatter)
+    return _get_logger(name)
 
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
-    logger.addHandler(handler)
+    # r"""
+    # Gets a standard logger with a stream hander to stdout.
+    # """
+    # formatter = logging.Formatter(
+    #     fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"
+    # )
+    # handler = logging.StreamHandler(sys.stdout)
+    # handler.setFormatter(formatter)
 
-    return logger
+    # logger = logging.getLogger(name)
+    # logger.setLevel(logging.INFO)
+    # logger.addHandler(handler)
+
+    # return logger
 
 
 def reset_logging() -> None:

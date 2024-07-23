@@ -73,9 +73,13 @@ def _parse_args(parser: "HfArgumentParser", args: Optional[Dict[str, Any]] = Non
     return (*parsed_args,)
 
 
-def _set_transformers_logging(log_level: Optional[int] = logging.INFO) -> None:
+def _set_transformers_logging(log_level: Optional[int] = logging.INFO, log_file: Optional[str] = None) -> None:
     transformers.utils.logging.set_verbosity(log_level)
     transformers.utils.logging.enable_default_handler()
+    if log_file is not None:
+        transformers.utils.logging.add_handler(
+            logging.FileHandler(filename=log_file, mode="w"))
+
     transformers.utils.logging.enable_explicit_format()
 
 
@@ -157,7 +161,9 @@ def get_train_args(args: Optional[Dict[str, Any]] = None) -> _TRAIN_CLS:
 
     # Setup logging
     if training_args.should_log:
-        _set_transformers_logging()
+        log_file = os.path.join(training_args.output_dir, f"log_{training_args.local_rank}.txt")
+        os.makedirs(training_args.output_dir, exist_ok=True)
+        _set_transformers_logging(log_file=log_file)
 
     # Check arguments
     if finetuning_args.stage != "pt" and data_args.template is None:
