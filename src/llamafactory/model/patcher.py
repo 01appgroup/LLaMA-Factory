@@ -65,6 +65,8 @@ def patch_config(
         else:
             model_args.compute_dtype = infer_optim_dtype(model_dtype=getattr(config, "torch_dtype", None))
 
+    init_kwargs['torch_dtype'] = getattr(config, "torch_dtype", None)
+
     if is_torch_npu_available():
         use_jit_compile = os.environ.get("JIT_COMPILE", "0").lower() in ["true", "1"]
         torch.npu.set_compile_mode(jit_compile=use_jit_compile)

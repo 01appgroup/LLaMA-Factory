@@ -16,6 +16,7 @@
 # limitations under the License.
 
 from typing import TYPE_CHECKING, List, Optional
+import os
 
 from ...data import PairwiseDataCollatorWithPadding, get_dataset
 from ...extras.ploting import plot_loss
@@ -63,7 +64,7 @@ def run_rm(
     # Training
     if training_args.do_train:
         train_result = trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
-        trainer.save_model()
+        trainer.save_model(os.path.join(trainer.args.output_dir, "model"))
         if training_args.should_save:
             fix_valuehead_checkpoint(model, training_args.output_dir, training_args.save_safetensors)
 

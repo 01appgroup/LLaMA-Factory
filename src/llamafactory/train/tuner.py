@@ -16,6 +16,7 @@ import os
 import shutil
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
+import os
 import torch
 from transformers import PreTrainedModel
 
@@ -38,11 +39,21 @@ if TYPE_CHECKING:
 
 
 logger = get_logger(__name__)
+logger.setLevel("INFO")
 
 
 def run_exp(args: Optional[Dict[str, Any]] = None, callbacks: List["TrainerCallback"] = []) -> None:
     callbacks.append(LogCallback())
     model_args, data_args, training_args, finetuning_args, generating_args = get_train_args(args)
+    
+    if 'tensorboard' in training_args.report_to:
+        training_args.logging_dir = os.path.join(training_args.output_dir, "logs")
+    
+    os.makedirs(training_args.output_dir, exist_ok=True)
+    
+    if training_args.local_rank == 0:
+        logger.info(
+            f"{data_args}\n{model_args}\n{model_args}\{finetuning_args}\{generating_args}")
 
     if finetuning_args.stage == "pt":
         run_pt(model_args, data_args, training_args, finetuning_args, callbacks)
