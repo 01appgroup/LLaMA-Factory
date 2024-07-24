@@ -46,8 +46,8 @@ def run_exp(args: Optional[Dict[str, Any]] = None, callbacks: List["TrainerCallb
     callbacks.append(LogCallback())
     model_args, data_args, training_args, finetuning_args, generating_args = get_train_args(args)
     
-    if 'tensorboard' in training_args.report_to:
-        training_args.logging_dir = os.path.join(training_args.output_dir, "logs")
+    if 'tensorboard' in training_args.report_to and training_args.logging_dir is None:
+        training_args.logging_dir = os.path.join(training_args.output_dir, "tensorboard")
     
     os.makedirs(training_args.output_dir, exist_ok=True)
     
