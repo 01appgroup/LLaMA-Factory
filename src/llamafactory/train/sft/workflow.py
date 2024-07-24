@@ -16,6 +16,7 @@
 # limitations under the License.
 
 from typing import TYPE_CHECKING, List, Optional
+import os
 
 from ...data import SFTDataCollatorWith4DAttentionMask, get_dataset
 from ...extras.constants import IGNORE_INDEX
