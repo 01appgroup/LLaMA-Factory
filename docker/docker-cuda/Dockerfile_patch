@@ -1,0 +1,4 @@
+FROM llamafactory:v0.8.3-udp
+
+# override source code
+COPY . /app

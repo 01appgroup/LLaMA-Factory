@@ -440,12 +440,12 @@ CUDA 用户：
 
 ```bash
 docker build -f ./docker/docker-cuda/Dockerfile \
-    --build-arg INSTALL_BNB=false \
-    --build-arg INSTALL_VLLM=false \
-    --build-arg INSTALL_DEEPSPEED=false \
-    --build-arg INSTALL_FLASHATTN=false \
-    --build-arg PIP_INDEX=https://pypi.org/simple \
-    -t llamafactory:latest .
+    --build-arg INSTALL_BNB=true \
+    --build-arg INSTALL_VLLM=true \
+    --build-arg INSTALL_DEEPSPEED=true \
+    --build-arg INSTALL_FLASHATTN=true \
+    --build-arg PIP_INDEX=https://mirrors.ivolces.com/pypi/simple \
+    -t llamafactory:v0.8.3-udp .
 
 docker run -dit --gpus=all \
     -v ./hf_cache:/root/.cache/huggingface \

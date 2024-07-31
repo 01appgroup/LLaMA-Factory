@@ -6,6 +6,7 @@ FROM nvcr.io/nvidia/pytorch:24.02-py3
 ENV MAX_JOBS=4
 ENV FLASH_ATTENTION_FORCE_BUILD=TRUE
 ENV VLLM_WORKER_MULTIPROC_METHOD=spawn
+ENV LLAMAFACTORY_HOME=/app
 
 # Define installation arguments
 ARG INSTALL_BNB=false

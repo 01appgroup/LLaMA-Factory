@@ -1,0 +1,1 @@
+docker build -f ./docker/docker-cuda/Dockerfile_patch -t registry.lingyiwanwu.net/cluster-integration/cluster-applications/llamafactory:v0.8.3-udp_0.1 .
